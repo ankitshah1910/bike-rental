@@ -35,12 +35,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.get('/', (req, res) => res.send('API Running'));
-app.use('/auth', require('./src/routes/auth'));
-app.use('/user', require('./src/routes/user'));
-app.use('/reservation', require('./src/routes/reservation'));
-app.use('/bike', require('./src/routes/bike'));
-app.use('/rating', require('./src/routes/rating'));
+app.get('/api/', (req, res) => res.send('API Running'));
+app.use('/api/auth', require('./src/routes/auth'));
+app.use('/api/user', require('./src/routes/user'));
+app.use('/api/reservation', require('./src/routes/reservation'));
+app.use('/api/bike', require('./src/routes/bike'));
+app.use('/api/rating', require('./src/routes/rating'));
 
 const PORT = process.env.PORT || 5000;
 
