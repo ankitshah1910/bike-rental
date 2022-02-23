@@ -9,8 +9,14 @@ const Reservation = require('../models/Reservation');
 const Rating = require('../models/Rating');
 const BikeResult = require('../models/BikeResult');
 
-const uploadImage = require('../middleware/imageUpload');
+const fs = require('fs');
+const util = require('util');
+const unlinkFile = util.promisify(fs.unlink);
 
+const uploadImage = require('../middleware/imageUpload');
+const { uploadFile, getFileStream } = require('../middleware/s3');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 // #route:  POST /create/
 // #desc:   Add/update new Bike
 // #access: Private
@@ -18,8 +24,9 @@ router.post(
   '/:bikeId',
   [
     checkManager,
-    uploadImage.uploadImages,
-    uploadImage.getNumber,
+    upload.single('images'),
+    // uploadImage.uploadImages,
+    // uploadImage.getNumber,
     check('model', 'model is Required').not().isEmpty(),
     check('color', 'color is Required').not().isEmpty(),
     check('address', 'address is Required').not().isEmpty(),
@@ -30,6 +37,12 @@ router.post(
     check('longitude', 'longitude  is Required').not().isEmpty(),
   ],
   async (req, res) => {
+    const file = req.file;
+    console.log(file);
+    const result = await uploadFile(file);
+    await unlinkFile(file.path);
+    console.log(result);
+    return res.json({ success: true, data: result });
     const errors = validationResult(req);
 
     const {

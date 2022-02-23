@@ -41,8 +41,9 @@ app.use('/api/user', require('./src/routes/user'));
 app.use('/api/reservation', require('./src/routes/reservation'));
 app.use('/api/bike', require('./src/routes/bike'));
 app.use('/api/rating', require('./src/routes/rating'));
+app.use('/api/public', require('./src/routes/public'));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 1910;
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));

@@ -3,7 +3,7 @@ const urls = {
     window.location.hostname === 'localhost' ? 'http://localhost:3000/' : '/',
   base_api:
     window.location.hostname === 'localhost'
-      ? 'http://localhost:1910/'
+      ? 'http://localhost:1910/api/'
       : '/api/',
   base_upload:
     window.location.hostname === 'localhost' ? 'http://localhost:1910/' : '/',
